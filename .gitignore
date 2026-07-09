@@ -3,3 +3,13 @@
 
 # macOS
 .DS_Store
+
+# Personal/working docs — keep only the shareable requirements spec
+docs/Project Plan.md
+docs/progress-notes.md
+docs/requirements.old.md
+docs/build-tasks.md
+
+# Personal household config — keep only the .example templates, ignore real filled-in files
+config/*.md
+!config/*.example.md
