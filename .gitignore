@@ -13,3 +13,9 @@ docs/build-tasks.md
 # Personal household config — keep only the .example templates, ignore real filled-in files
 config/*.md
 !config/*.example.md
+
+# Personal recipes — keep only the schema template + the shared example recipes; ignore the rest
+recipes/*.md
+!recipes/_template.md
+!recipes/beef-taco-bowls.md
+!recipes/sheet-pan-chicken-fajitas.md
