@@ -44,8 +44,8 @@ to dietary goals, shops smarter, and wastes less food.
 - One-time **kickoff** to capture household config.
 - **Weekly run** (scheduled + manual) that plans dinners, builds the grocery
   list, and schedules prep reminders.
-- **Hybrid recipe sourcing**: personal collection first, AI/web suggestions to
-  fill gaps.
+- **Hybrid recipe sourcing**: ask library-only vs. mix-in-new vs. mostly-new each
+  week; personal collection and AI/web suggestions accordingly.
 - **Store-grouped grocery list** using simple ranked-store logic.
 - **Ratings** feedback loop collected twice weekly.
 - **Shareable** project structure (templates + gitignored personal data).
@@ -69,7 +69,9 @@ to dietary goals, shops smarter, and wastes less food.
 Captured once and stored as editable config files (see 7). Collect:
 
 1. Home address (used to derive nearby grocery stores).
-2. Ranked list of grocery stores the family shops at.
+2. Ranked list of grocery stores the family shops at, plus **how many stores they
+   typically shop at each week** (`weekly_store_count`, usually 1–2) — the weekly
+   grocery list is capped to that many stops even if more stores are ranked.
 3. Ideal/target dinner prep time.
 4. Weekly budget.
 5. Household members (names, ages).
@@ -83,7 +85,9 @@ Captured once and stored as editable config files (see 7). Collect:
 10. **Meal-planner run timing & shopping day** — the family's preferred day/time
     for the weekly planning job, plus the family's weekly grocery-shopping day
     (used to set the plan-approval deadline; see 5.8). Per-family.
-11. Examples of up to 5 favorite dinner recipes (optional; seeds the collection).
+11. Optional starter favorites to **seed** the collection (a small kickoff batch —
+    not a collection size limit). Families can add unlimited recipes anytime via
+    link, photo, or chat (see 5.3 collection growth).
 
 ### 5.2 Weekly Run
 
@@ -96,30 +100,45 @@ finalizing. Steps:
    detect dinners-out (work dinners, dinner at a friend's, travel) and determine
    how many dinners are needed, and for whom, each night.
 2. Confirm/adjust the number of dinners to plan for the week (configurable).
-3. Select dinners using **hybrid sourcing** (5.3), respecting dietary
-   requirements, prep-time target, budget, and available equipment.
+3. Ask **sourcing preference** for the week (library only / mix in new ideas /
+   mostly new), then select dinners using **hybrid sourcing** (5.3), respecting
+   dietary requirements, prep-time target, budget, and available equipment.
 4. Favor recipes with **shared ingredients** to reduce waste.
 5. Assign meals to days based on who is home and prep constraints.
 6. Generate the **store-grouped grocery list** (5.4), excluding pantry staples
-   already on hand.
+   already on hand, capped to `weekly_store_count` stores.
 7. Schedule **prep reminders** (5.6).
 8. Deliver outputs (5.5).
 
 ### 5.3 Recipe Sourcing (Hybrid)
 
-- Draw first from the family's **personal recipe collection**.
-- Fill remaining slots with **AI-generated and/or web-sourced** suggestions
-  matched to the family's preferences and ratings (5.7).
+- Each weekly run asks (or uses a configured default) whether to use **library
+  only**, **mix in new ideas** (hybrid), or **mostly new** — do not silently
+  exhaust the personal collection before suggesting anything new.
+- **Library only:** draw only from the family's personal recipe collection.
+- **Mix in new ideas (hybrid):** blend collection recipes with AI/web suggestions
+  even when the library could cover the week alone.
+- **Mostly new:** prefer AI-generated and/or web-sourced suggestions matched to
+  preferences and ratings (5.7); use collection recipes sparingly.
+- Committed demo recipes marked `example: true` are **not** part of the personal
+  collection until the household adopts them.
 - **Collection growth:** the user pastes a recipe link (NYT, TikTok, Instagram,
   blog) or a photo of a recipe card, and Claude extracts it into a structured
-  markdown file in the project's recipe collection.
+  markdown file in the project's recipe collection. There is no collection size
+  limit.
 
 ### 5.4 Grocery List (MVP)
 
 - Aggregate all needed ingredients across the week's recipes.
 - Exclude items already on hand (pantry staples from kickoff).
-- **Group the list by store** using simple ranked-store logic — e.g. if multiple
-  recipes need chicken, assign chicken to the preferred bulk store (Costco).
+- **Shoppable quantities:** round purchase amounts **up** to buyable units for
+  discrete items (`whole`, `count`, `can`, etc.) — never leave fractional onions
+  or similar on the shopping list. Recipe docs may still use fractions for
+  cooking.
+- **Group the list by store** using simple ranked-store logic, **capped by
+  `weekly_store_count`** from kickoff (typically 1–2 stops). E.g. if the cap is
+  1, everything goes to the top-ranked store; if 2, bulk items to rank-1 and the
+  rest to rank-2 — do not open a third store just because `best_for` matches.
 - No live pricing/sale lookups in MVP (see Out of Scope).
 - **Delivered to a dedicated Apple Reminders "Groceries" list** (checkable while
   shopping), separate from the "Family Meals" prep list — see 5.5.
@@ -133,7 +152,9 @@ finalizing. Steps:
    both partners can navigate and open each day's recipe on their phone. New-doc-per-recipe
    is create-only — the most reliable Docs pattern (no fragile in-place edits).
 3. **Grocery list grouped by store** → a dedicated Apple **Reminders "Groceries" list**
-   (checkable while shopping; shared so both partners can access). Chosen over Notes
+   (checkable while shopping; shared so both partners can access). Each item's **title** is
+   the ingredient line only; the **assigned store is a Reminder tag** (via apple-events
+   `reminders_tasks` `tags`) so the list can be filtered/grouped by store. Chosen over Notes
    because a checklist is the better shopping UX.
 4. **Prep reminders** → Apple **Reminders "Family Meals" list** (5.6).
 
@@ -233,7 +254,9 @@ can be edited directly or by chatting with Claude, and version-controlled.
 - **Real files** (gitignored — personal data): the filled-in versions Claude
   reads/writes — e.g. `config/household.md`, etc.
 - **Recipe collection:** structured markdown files, one per recipe. Each recipe's
-  rating (1–5) and notes live in that file's frontmatter (5.7).
+  rating (1–5) and notes live in that file's frontmatter (5.7). Files with
+  `example: true` are committed demos and are skipped by weekly planning until
+  adopted.
 - **Grocery list output:** Apple Reminders "Groceries" list (not a project file).
 - **Recipes output:** one Google Doc per dinner (generated from the repo recipe markdown),
   grouped in a shared weekly Drive folder — for the mobile cooking UX. Not a project file;

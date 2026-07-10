@@ -11,16 +11,17 @@ scheduled job (Phase 5) reuses this same flow.
 ## Preflight — load config & inputs
 1. Read the family's **real** config (gitignored; written by `/kickoff`):
    - `config/household.md` — members, budget, `target_prep_time_min`, `default_dinner_count`,
-     `portion_strategy`, `shopping_day`, `watch_calendars`
+     `weekly_store_count`, `portion_strategy`, `shopping_day`, `watch_calendars`
    - `config/dietary.md` — per-person `diet` / `allergies` (hard) / `avoid` (soft) / `preferences`
    - `config/pantry-staples.md` — items to EXCLUDE from the grocery list
    - `config/store-rankings.md` — ranked stores + `best_for` (drives grocery grouping)
    - `config/equipment.md` — the only gear a recipe may require
    - **If any real `config/*.md` is missing**, stop and tell the user to run **`/kickoff`** first
      (don't invent values or read from the `.example` templates).
-2. Read the recipe collection: every `recipes/*.md` **except** files starting with `_`
-   (templates). Parse frontmatter (`ingredients`, `tags`, `equipment`, `rating`,
-   `rating_notes`, `liked_traits`, `times_cooked`).
+2. Read the recipe collection: every `recipes/*.md` **except** (a) files starting with `_`
+   (templates) and (b) files whose frontmatter has `example: true` (committed demos — not
+   yet adopted by this household). Parse frontmatter (`ingredients`, `tags`, `equipment`,
+   `rating`, `rating_notes`, `liked_traits`, `times_cooked`).
 3. If the apple-events / google-docs MCP tools aren't loaded, load them first.
 
 ## Step 1 — Read the calendar (read-only)
@@ -38,6 +39,20 @@ scheduled job (Phase 5) reuses this same flow.
   ("Calendar was empty — assumed full family home all week; edit & re-run if wrong").
 - Show the count and let the user adjust before selecting recipes.
 
+## Step 2.5 — Sourcing preference (hybrid §5.3)
+After the dinner count is confirmed, **ask how to source this week's meals** before picking
+recipes. Do not silently default to "exhaust the library first." Offer:
+
+1. **Library only** — use only recipes already in the collection (skip AI/web suggestions).
+2. **Mix in new ideas** (hybrid, default) — blend collection recipes with some AI/web
+   suggestions even when the library could fill the week alone.
+3. **Mostly new** — prefer AI/web suggestions; pull from the collection only when a clear
+   favorite fits.
+
+For scheduled/unattended runs (Phase 5), use hybrid unless `sourcing_mode` is set in
+`household.md` (`library-only` | `hybrid` | `mostly-new`). Always surface the choice on
+manual runs, especially the first week.
+
 ## Step 3 — Select recipes (hybrid sourcing §5.3)
 Honor, as hard vs. soft constraints:
 - **Hard:** every member's `allergies`; `diet` type; recipe `equipment` ⊆ `config/equipment.md`.
@@ -46,9 +61,13 @@ Honor, as hard vs. soft constraints:
 - **Ratings (§5.7):** boost high `rating`; suppress low; use `rating_notes` + `liked_traits` to
   find *similar* winners (e.g. a loved "bowl format" → favor more bowl-style meals, not just that
   recipe). Avoid repeating anything cooked very recently (`last_cooked`).
-- **Sourcing order:** fill from the personal collection first; fill remaining slots with
-  AI-generated / web-sourced suggestions matched to preferences+ratings. Mark suggested-new
-  recipes clearly in the draft (they aren't in the collection yet).
+- **Sourcing (follow Step 2.5 choice):**
+  - *Library only* — fill all slots from the personal collection.
+  - *Mix in new ideas* — intentionally include some AI/web suggestions alongside collection
+    picks; do **not** wait until the library is exhausted.
+  - *Mostly new* — fill primarily with AI/web suggestions matched to preferences+ratings;
+    use collection recipes sparingly for clear favorites.
+  Mark suggested-new recipes clearly in the draft (they aren't in the collection yet).
 - **Favor shared ingredients** across the chosen set to cut waste (e.g. reuse peppers/onion/lime
   across two meals) — this is an explicit selection tiebreaker.
 
@@ -63,10 +82,22 @@ Honor, as hard vs. soft constraints:
 - Aggregate `ingredients` across all chosen recipes; **sum quantities per item**, scaling by the
   Step-4 servings vs. each recipe's `servings`. If two entries share an item but differ in unit,
   keep them as separate lines and note the unit mismatch rather than guessing a conversion.
+- **Shoppable quantities:** for grocery output, round **up** fractional quantities when `unit`
+  is a buyable discrete unit (`whole`, `count`, `can`, `bunch`, `head`, `clove`, or similar) —
+  e.g. `0.5 whole` onion → `1 whole`. Never emit fractional "whole"/"count" buy amounts.
+  Recipe-level fractions stay in the cooking docs; the shopping list uses practical purchase
+  amounts. Weight/volume units (`lb`, `oz`, `cup`, `tbsp`, etc.) may stay fractional if that's
+  how they're sold/measured.
 - **Exclude** anything with `staple: true` in a recipe **or** present in `config/pantry-staples.md`.
-- **Group by store** using `store-rankings.md`: bulk/shared proteins & staples → the top-ranked
-  bulk store; specialty/produce/quick items → whichever store's `best_for` fits best; anything
-  ambiguous → the lowest-ranked "fill-in" store. Order groups by store rank.
+- **Group by store** using `store-rankings.md`, capped by `weekly_store_count` from
+  `household.md` (default **2** if unset):
+  - Use only the top `weekly_store_count` ranked stores for this week's list.
+  - When `weekly_store_count` is **1**: put **everything** at the rank-1 store.
+  - When **2**: bulk/shared proteins & staples → rank-1; everything else → rank-2 (do not
+    open a third store just because a `best_for` matches better).
+  - When higher: assign within the allowed top-N by `best_for`, then fall back to the
+    lowest-ranked allowed store for leftovers — never exceed the cap.
+  Order groups by store rank.
 
 ## Step 6 — Present the draft & get approval
 Show a single review block, top to bottom:
@@ -85,7 +116,12 @@ Do these only after explicit approval (or the deadline auto-finalize).
 **A. Grocery list → Apple Reminders "Groceries" list**
 - Use apple-events `reminders_lists` to find/create a list named exactly **Groceries**.
 - Add one task per grocery line via `reminders_tasks`. **Plain text titles only — no emoji, no
-  em-dashes** (constraint). Prefix with the store for scan-ability, e.g. `Costco: chicken breast 3 lb`.
+  em-dashes** (constraint).
+  - **Title** = ingredient line only, e.g. `chicken breast 3 lb` or `persian cucumber 2 whole`
+    (no store prefix in the title).
+  - **Tag** = the assigned store name via the `tags` parameter, e.g. `tags: ["Costco"]` or
+    `tags: ["Jewel-Osco"]`, so the Groceries list can be filtered/grouped by store in Reminders.
+    (apple-events stores tags as `[#StoreName]` in notes — that is expected.)
 
 **B. Prep reminders → Apple Reminders "Family Meals" list**
 - Find/create a list named exactly **Family Meals**.

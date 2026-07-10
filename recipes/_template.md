@@ -1,6 +1,7 @@
 ---
 title: "Recipe Title"
 source: ""                     # URL, cookbook name, "AI-generated", or "family"
+example: false                 # true = committed demo; /plan-week skips until you adopt it
 servings: 4
 prep_time_min: 30              # hands-on time
 total_time_min: 45             # including passive cook time
@@ -48,6 +49,9 @@ Tips, substitutions, or scaling notes.
 <!--
 Conventions:
 - Files starting with "_" (like this one) are templates and are skipped by the planner.
+- Files with `example: true` are committed demos and are also skipped by the planner.
+  To adopt a demo: set `example: false` (or remove the field) and clear/reset ratings if
+  you want a fresh history — or copy it to a new slug under your personal recipes.
 - The frontmatter `ingredients` block is the source of truth for the grocery list; the
   body Ingredients section is the human-readable cooking view. Keep them in sync (the
   recipe-import skill generates both).

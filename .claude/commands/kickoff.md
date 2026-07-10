@@ -39,9 +39,12 @@ Collect everything in requirements §5.1. Confirm each group back before moving 
 - Pantry staples always on hand (offer the template's grouped list; adjust) → `pantry-staples.md`.
   Explain these are excluded from grocery lists.
 
-**D. Shopping** → `store-rankings.md`
+**D. Shopping** → `store-rankings.md` + `household.md`
 - Ranked grocery stores + what each is best for. Use the home address to suggest nearby
-  options if that helps.
+  options if that helps. Collect a longer ranked list if useful for occasional runs.
+- **Weekly store trip count** (`weekly_store_count` in `household.md`): how many stores the
+  family actually shops at in a typical week (usually **1 or 2**). This caps how many stores
+  `/plan-week` spreads the grocery list across — not how many stores they may rank overall.
 
 **E. Scheduling** → `household.md`
 - Portion strategy: `scale-to-whos-home` | `deliberate-leftovers` | `always-full-family`
@@ -53,10 +56,14 @@ Collect everything in requirements §5.1. Confirm each group back before moving 
   subscription calendars (noise). Save the exact calendar names into `watch_calendars`.
   - If the `apple-events` tools aren't loaded, load them first (they're MCP tools).
 
-**F. Favorite recipes (optional)**
-- Up to 5 favorites to seed the collection. For each, offer to import from a link or photo
-  now, or capture a quick version. (Full extraction is the recipe-import flow; a light
-  capture into `recipes/<slug>.md` using `recipes/_template.md` is fine here.)
+**F. Favorite recipes (optional — seed only)**
+- Offer to import a **small starter batch** of favorites now (a soft batch of ~5 keeps kickoff
+  short — not a collection limit). Make clear they can **skip**, paste fewer or more if they
+  insist, and **add unlimited recipes anytime** later via `/import-recipe`, links, photos, or
+  chat. For each accepted now, offer to import from a link or photo, or capture a quick
+  version into `recipes/<slug>.md` using `recipes/_template.md`.
+- Mention that any committed demo recipes in `recipes/` with `example: true` are samples only
+  and won't appear in meal plans until the family adopts them.
 
 ## Writing the files
 - Write real files **without** the `.example` suffix: `config/household.md`,

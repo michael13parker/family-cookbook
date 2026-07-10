@@ -1,6 +1,7 @@
 ---
 title: "Beef Taco Bowls"
 source: "family"
+example: true                  # demo only — skipped by /plan-week until you adopt it
 servings: 4
 prep_time_min: 20
 total_time_min: 30
@@ -49,8 +50,8 @@ ingredients:
 rating: 4
 rating_notes: "loved the bowl format — easy to customize per kid; halve the chili powder for Riley"
 liked_traits: [bowl-format, quick, tex-mex, customizable]
-last_cooked: 2026-06-25
-times_cooked: 6
+last_cooked: 2026-07-17
+times_cooked: 7
 ---
 
 # Beef Taco Bowls

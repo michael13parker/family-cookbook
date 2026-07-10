@@ -5,7 +5,8 @@ A collection of family recipes.
 ## Structure
 
 - `config/*.example.md` — household config templates (copy to real filenames, gitignored)
-- `recipes/` — one markdown file per recipe (the cookbook; source of truth)
+- `recipes/` — one markdown file per recipe (the cookbook; source of truth). Committed
+  demos use `example: true` and are skipped by `/plan-week` until adopted.
 - `.claude/commands/` — workflow commands (see below)
 - `docs/` — requirements and setup guides
 
@@ -15,11 +16,12 @@ Four Claude Code slash-commands drive the whole loop:
 
 - **`/kickoff`** — one-time household setup. Interviews the family and writes the real
   `config/*.md` files from the templates (including which calendars to watch).
-- **`/plan-week`** — reads the week's calendar to see who's home, picks recipes (your
-  collection first, web to fill gaps) honoring dietary/prep/budget/equipment, then drafts a
-  menu. On approval it writes a store-grouped grocery list to the Apple **Reminders
-  "Groceries"** list, schedules prep reminders in **Reminders "Family Meals"**, and creates
-  one **Google Doc per dinner** in a shared weekly folder.
+- **`/plan-week`** — reads the week's calendar to see who's home, asks library-only vs.
+  new-idea mix, picks recipes honoring dietary/prep/budget/equipment, then drafts a
+  menu. On approval it writes a store-capped grocery list to the Apple **Reminders
+  "Groceries"** list (store as tag, shoppable quantities), schedules prep reminders in
+  **Reminders "Family Meals"**, and creates one **Google Doc per dinner** in a shared
+  weekly folder.
 - **`/review-recipes`** — prompts the family to rate recently cooked dinners (1–5 + notes)
   and writes ratings back into each recipe's frontmatter, which biases future planning.
 - **`/import-recipe`** — turns a pasted link or a photo into a structured recipe file in
