@@ -1,7 +1,8 @@
 ---
 # Your grocery stores in ranked preference order.
-# The grocery list is grouped by store using this ranking: shared/bulk staples go to
-# your top bulk store, specialty items to whichever store fits best.
+# The grocery list is grouped by store using this ranking — but only up to
+# `weekly_store_count` from household.md (typical weekly trip cap). Extra ranked
+# stores are available for occasional runs; they are not used every week by default.
 stores:
   - name: Costco
     rank: 1
@@ -17,7 +18,8 @@ stores:
 # Store rankings
 
 Template — copy to `store-rankings.md` (gitignored). Rank the stores you actually shop at.
-The weekly run groups the grocery list by store so a single trip is efficient.
+The weekly run groups the grocery list by store so shopping is efficient, capped by
+`weekly_store_count` in `household.md` (usually 1–2 stops per week).
 
 **MVP scope:** this uses simple ranked-store grouping only — no live sale/price lookups or
 multi-store price optimization (deferred; see requirements §4.2). `home_address` in

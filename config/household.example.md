@@ -4,6 +4,9 @@ home_address: "123 Example St, Springfield, IL 62704"  # used to find nearby gro
 weekly_budget_usd: 150          # target grocery spend per week
 target_prep_time_min: 40        # ideal hands-on dinner prep time
 default_dinner_count: 5         # dinners to plan when the calendar is empty (requirements §5.8)
+weekly_store_count: 2           # max stores per weekly shop (1–2 typical); caps grocery grouping
+# Optional default for scheduled /plan-week runs (manual runs still ask):
+# sourcing_mode: hybrid          # library-only | hybrid | mostly-new
 
 # ── Members ─────────────────────────────────────────────────────
 # Everyone the workflow cooks for. Dietary needs live in dietary.example.md.

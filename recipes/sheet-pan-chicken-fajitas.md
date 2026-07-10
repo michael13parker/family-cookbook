@@ -1,6 +1,7 @@
 ---
 title: "Sheet-Pan Chicken Fajitas"
 source: "family"
+example: true                  # demo only — skipped by /plan-week until you adopt it
 servings: 4
 prep_time_min: 15
 total_time_min: 35
