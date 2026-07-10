@@ -121,15 +121,21 @@ finalizing. Steps:
 - **Group the list by store** using simple ranked-store logic — e.g. if multiple
   recipes need chicken, assign chicken to the preferred bulk store (Costco).
 - No live pricing/sale lookups in MVP (see Out of Scope).
+- **Delivered to a dedicated Apple Reminders "Groceries" list** (checkable while
+  shopping), separate from the "Family Meals" prep list — see 5.5.
 
 ### 5.5 Outputs
 
-1. **Menu for the week, by day.**
-2. **Recipes + step-by-step instructions.**
-3. **Grocery list grouped by store**, delivered to **Apple Notes** (shared, so
-   both partners can access; can be uploaded back into Claude for the guided
-   cooking UX with timers).
-4. **Prep reminders** in Apple Reminders (5.6).
+1. **Menu for the week, by day** — the shared weekly Drive folder itself (its daily docs,
+   named by day) serves as the at-a-glance index; no separate menu doc.
+2. **Recipes + step-by-step instructions** → **one Google Doc per dinner** (generated
+   from the source-of-truth recipe markdown), grouped in a shared weekly Drive folder so
+   both partners can navigate and open each day's recipe on their phone. New-doc-per-recipe
+   is create-only — the most reliable Docs pattern (no fragile in-place edits).
+3. **Grocery list grouped by store** → a dedicated Apple **Reminders "Groceries" list**
+   (checkable while shopping; shared so both partners can access). Chosen over Notes
+   because a checklist is the better shopping UX.
+4. **Prep reminders** → Apple **Reminders "Family Meals" list** (5.6).
 
 ### 5.6 Prep Reminders
 
@@ -187,8 +193,8 @@ notification**.
   re-run if wrong").
 - **No approval by deadline** (meal planner): if the pre-drafted plan isn't
   approved by the **evening before the family's shopping day** (5.1),
-  **auto-finalize the draft as-is** — write the grocery list to Apple Notes and
-  schedule prep reminders — so shopping isn't blocked.
+  **auto-finalize the draft as-is** — write the grocery list to the Reminders
+  "Groceries" list and schedule prep reminders — so shopping isn't blocked.
 - **No response to a ratings prompt** (recipe reviewer): no rating is captured
   that cycle (harmless); the next scheduled run re-prompts.
 
@@ -200,12 +206,17 @@ notification**.
   mobile app provides the guided recipe/cooking UX (timers) when a recipe note
   is uploaded.
 - **apple-events MCP** (`FradSer/mcp-server-apple-events`, installed
-  project-scoped via `.mcp.json`) — reads **Apple Calendar** (schedule) and
-  writes **Apple Reminders** (the "Family Meals" prep list).
+  project-scoped via `.mcp.json`) — reads **Apple Calendar** (schedule; read-only,
+  limited to the watch-allowlist) and writes **Apple Reminders**: the **"Family Meals"**
+  prep list and a **"Groceries"** shopping list (store-grouped, checkable).
   - Note: this changes the original plan's "Google Calendar" — schedule lives in
     Apple Calendar (confirmed).
-- **Apple Notes** — destination for the weekly grocery list and recipe handoff to
-  mobile.
+- **Google Docs** — destination for the week's **recipes** (one Doc per dinner, in a shared
+  weekly Drive folder), handed to the phone for the mobile cooking UX. Chosen over Apple
+  Notes for reliability: it's a headless API (no macOS UI automation / "Mac must be awake"
+  requirement), and new-doc-per-recipe is create-only (the most robust update pattern).
+  Requires Google OAuth (Drive/Docs) — a setup/verification step. The recipe markdown in the
+  repo stays the source of truth; each Doc is generated from it.
 - **GitHub** — the workflow is backed up as a shareable project so other
   households can clone and run it.
 
@@ -223,7 +234,10 @@ can be edited directly or by chatting with Claude, and version-controlled.
   reads/writes — e.g. `config/household.md`, etc.
 - **Recipe collection:** structured markdown files, one per recipe. Each recipe's
   rating (1–5) and notes live in that file's frontmatter (5.7).
-- **Grocery list output:** Apple Notes (not a project file).
+- **Grocery list output:** Apple Reminders "Groceries" list (not a project file).
+- **Recipes output:** one Google Doc per dinner (generated from the repo recipe markdown),
+  grouped in a shared weekly Drive folder — for the mobile cooking UX. Not a project file;
+  the recipe markdown remains the source of truth.
 
 `.gitignore` must exclude all real personal-data files while keeping `.example`
 templates.
