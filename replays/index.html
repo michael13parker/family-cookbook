@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Family Cookbook — Build Session Replays</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0f1117;
+      --surface: #171a22;
+      --border: #2a3140;
+      --text: #e8ecf3;
+      --muted: #9aa6bd;
+      --accent: #6ea8ff;
+      --star: #f5b942;
+      --claude: #d97757;
+      --cursor: #111111;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px 64px;
+    }
+    h1 { margin: 0 0 8px; font-size: 2rem; }
+    .subtitle { color: var(--muted); margin: 0 0 28px; }
+    .stats {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .stat {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      background: var(--surface);
+    }
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .stat strong { display: block; font-size: 1.4rem; margin-top: 4px; }
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 16px;
+      font-size: 1.1rem;
+    }
+    .section { margin-bottom: 32px; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      min-height: 220px;
+    }
+    .card-meta {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+    }
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+      line-height: 1.35;
+    }
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      flex: 1;
+    }
+    .card-footer {
+      margin-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .card-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .card-link:hover { text-decoration: underline; }
+    .star { color: var(--star); }
+    .source-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .source-logo.claude {
+      background: var(--claude);
+      color: white;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    .source-logo.cursor {
+      background: var(--cursor);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Family Cookbook — Build Session Replays</h1>
+    <p class="subtitle">Visible sessions become individual, self-contained replays.</p>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">Published sessions</div>
+        <strong>13</strong>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Sources</div>
+        <strong>9 Claude Code · 4 Cursor</strong>
+      </div>
+    </div>
+    <section class="section">
+      <h2><span class="star">★</span> Featured sessions</h2>
+      <div class="cards"><article class="card" data-source="Claude Code">
+  <div class="card-meta">Claude Code · 07-09 16:30</div>
+  <h3><span class="star">★</span> requirements session</h3>
+  <p>**Day-1 requirements session:** progress-notes diary started, Apple Reminders MCP research (rem vs automating-mac-apps vs FradSer apple-events), requirements interview (2 rounds), ratings schema decided</p>
+  <div class="card-footer">
+    <a class="card-link" href="sessions/4d01476d-e1af-468e-9a1e-019cb740c98f.html">Open replay →</a>
+    <span class="source-logo claude" title="Claude Code" aria-hidden="true">✳</span>
+  </div>
+</article>
+<article class="card" data-source="Claude Code">
+  <div class="card-meta">Claude Code · 07-09 18:27</div>
+  <h3><span class="star">★</span> build session</h3>
+  <p>**The big build session:** vault EPERM workaround (docs moved in-repo), `build-tasks.md` created, apple-events MCP verified, Phase 1 built + committed, Apple Notes → Google Docs pivot, GCP OAuth setup</p>
+  <div class="card-footer">
+    <a class="card-link" href="sessions/893d1ee6-7032-470a-b83a-918e37db5fcf.html">Open replay →</a>
+    <span class="source-logo claude" title="Claude Code" aria-hidden="true">✳</span>
+  </div>
+</article>
+<article class="card" data-source="Claude Code">
+  <div class="card-meta">Claude Code · 07-10 17:50</div>
+  <h3><span class="star">★</span> bug-log.md created</h3>
+  <p>`bug-log.md` created (log-only, no actioning during testing)</p>
+  <div class="card-footer">
+    <a class="card-link" href="sessions/afbfe472-e824-46d6-a419-29a767855bf7.html">Open replay →</a>
+    <span class="source-logo claude" title="Claude Code" aria-hidden="true">✳</span>
+  </div>
+</article>
+<article class="card" data-source="Cursor">
+  <div class="card-meta">Cursor · 07-10 17:54</div>
+  <h3><span class="star">★</span> add to bug log, Bugs 001–005</h3>
+  <p>Log the example-recipe issue discovered during kickoff and first-week planning</p>
+  <div class="card-footer">
+    <a class="card-link" href="sessions/518b8197-79de-48cc-b48b-779fb99c85bf.html">Open replay →</a>
+    <span class="source-logo cursor" title="Cursor" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M4 3l16 9-8 2-4 7L4 3zm4.2 4.5l1.3 8.2 1.5-2.7 3.2-.8-6-4.7z"/></svg></span>
+  </div>
+</article>
+<article class="card" data-source="Cursor">
+  <div class="card-meta">Cursor · 07-10 18:49</div>
+  <h3><span class="star">★</span> action bug-log.md</h3>
+  <p>Implement and document the fixes recorded in `docs/bug-log.md`</p>
+  <div class="card-footer">
+    <a class="card-link" href="sessions/4255feb1-8a08-4920-8db1-79f947e9855e.html">Open replay →</a>
+    <span class="source-logo cursor" title="Cursor" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M4 3l16 9-8 2-4 7L4 3zm4.2 4.5l1.3 8.2 1.5-2.7 3.2-.8-6-4.7z"/></svg></span>
+  </div>
+</article></div>
+    </section>
+    <section class="section">
+      <h2>All other sessions</h2>
+      <div class="cards"><article class="card" data-source="Claude Code">
+  <div class="card-meta">Claude Code · 07-09 16:59</div>
+  <h3>apple-events MCP</h3>
+  <p>Trust/approve the apple-events MCP server project-scoped</p>
+  <div class="card-footer">
+    <a class="card-link" href="sessions/9cd153b5-7650-4ae1-bf5b-ec920cdc0c52.html">Open replay →</a>
+    <span class="source-logo claude" title="Claude Code" aria-hidden="true">✳</span>
+  </div>
+</article>
+<article class="card" data-source="Claude Code">
+  <div class="card-meta">Claude Code · 07-10 15:53</div>
+  <h3>Google Docs MCP Setup</h3>
+  <p>Google Docs MCP verified end-to-end (list/create/delete)</p>
+  <div class="card-footer">
+    <a class="card-link" href="sessions/9864a6ff-a2d2-4dfc-9312-e60ff327434f.html">Open replay →</a>
+    <span class="source-logo claude" title="Claude Code" aria-hidden="true">✳</span>
+  </div>
+</article>
+<article class="card" data-source="Cursor">
+  <div class="card-meta">Cursor · 07-10 17:09</div>
+  <h3>Setup Test Family</h3>
+  <p>Move cookbook test-family event times forward one hour for Chicago</p>
+  <div class="card-footer">
+    <a class="card-link" href="sessions/8a6a3065-a0d4-44ea-a6a5-be4d949d9956.html">Open replay →</a>
+    <span class="source-logo cursor" title="Cursor" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M4 3l16 9-8 2-4 7L4 3zm4.2 4.5l1.3 8.2 1.5-2.7 3.2-.8-6-4.7z"/></svg></span>
+  </div>
+</article>
+<article class="card" data-source="Claude Code">
+  <div class="card-meta">Claude Code · 07-10 17:18</div>
+  <h3>/import-recipe Test</h3>
+  <p>Recipe imports from NYT Cooking / Delish URLs</p>
+  <div class="card-footer">
+    <a class="card-link" href="sessions/40873f62-c1ae-4301-bdc8-e3151632634c.html">Open replay →</a>
+    <span class="source-logo claude" title="Claude Code" aria-hidden="true">✳</span>
+  </div>
+</article>
+<article class="card" data-source="Claude Code">
+  <div class="card-meta">Claude Code · 07-10 17:41</div>
+  <h3>pantry stables manual over ride</h3>
+  <p>Pantry staples updates (chickpeas, butter, parmesan, rice, ginger)</p>
+  <div class="card-footer">
+    <a class="card-link" href="sessions/076ff2e6-4e03-4b50-9c4c-fbeed80d6d81.html">Open replay →</a>
+    <span class="source-logo claude" title="Claude Code" aria-hidden="true">✳</span>
+  </div>
+</article>
+<article class="card" data-source="Claude Code">
+  <div class="card-meta">Claude Code · 07-10 18:24</div>
+  <h3>Phase 5</h3>
+  <p>Phase 5 decision (defer to launchd) + Phase 6 share polish</p>
+  <div class="card-footer">
+    <a class="card-link" href="sessions/b0ccfe0e-4bc2-4dd8-bc68-b8a63cbe3479.html">Open replay →</a>
+    <span class="source-logo claude" title="Claude Code" aria-hidden="true">✳</span>
+  </div>
+</article>
+<article class="card" data-source="Cursor">
+  <div class="card-meta">Cursor · 07-10 18:59</div>
+  <h3>demo clean up</h3>
+  <p>Reset recipe `date last cooked` values for a clean workflow demo</p>
+  <div class="card-footer">
+    <a class="card-link" href="sessions/844ea45c-8dd6-41d1-a981-6576bf121e6a.html">Open replay →</a>
+    <span class="source-logo cursor" title="Cursor" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M4 3l16 9-8 2-4 7L4 3zm4.2 4.5l1.3 8.2 1.5-2.7 3.2-.8-6-4.7z"/></svg></span>
+  </div>
+</article>
+<article class="card" data-source="Claude Code">
+  <div class="card-meta">Claude Code · 07-10 21:44</div>
+  <h3>bug fixes BUG-001–005</h3>
+  <p>Bug fixes (BUG-001–005), demo prep: reset recipe cooked-history</p>
+  <div class="card-footer">
+    <a class="card-link" href="sessions/83cc026c-570e-45e2-ad33-a89bb907e7d9.html">Open replay →</a>
+    <span class="source-logo claude" title="Claude Code" aria-hidden="true">✳</span>
+  </div>
+</article></div>
+    </section>
+  </main>
+</body>
+</html>
