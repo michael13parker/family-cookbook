@@ -53,6 +53,15 @@ test("renderGallery highlights featured sessions in chronological order", () => 
   assert.match(html, /sessions\/4d01476d-e1af-468e-9a1e-019cb740c98f\.html/);
   assert.doesNotMatch(html, /Private sessions/);
   assert.doesNotMatch(html, /hidden-session-id/);
+  assert.match(html, /color-scheme:\s*light/);
+  assert.match(html, /--bg:\s*#ffffff/);
+  assert.match(html, /--surface:\s*#f6f8fa/);
+  assert.match(html, /--border:\s*#d0d7de/);
+  assert.match(html, /--text:\s*#1f2328/);
+  assert.match(html, /--muted:\s*#656d76/);
+  assert.match(html, /--accent:\s*#0969da/);
+  assert.match(html, /--star:\s*#bc4c00/);
+  assert.doesNotMatch(html, /color-scheme:\s*dark/);
 });
 
 test("expectedReplayIds returns sorted publishable IDs", () => {

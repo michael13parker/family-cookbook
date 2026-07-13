@@ -83,14 +83,14 @@ export function renderGallery({ title, sessions, featuredIds }) {
   <title>${escapeHtml(title)}</title>
   <style>
     :root {
-      color-scheme: dark;
-      --bg: #0f1117;
-      --surface: #171a22;
-      --border: #2a3140;
-      --text: #e8ecf3;
-      --muted: #9aa6bd;
-      --accent: #6ea8ff;
-      --star: #f5b942;
+      color-scheme: light;
+      --bg: #ffffff;
+      --surface: #f6f8fa;
+      --border: #d0d7de;
+      --text: #1f2328;
+      --muted: #656d76;
+      --accent: #0969da;
+      --star: #bc4c00;
       --claude: #d97757;
       --cursor: #111111;
     }
@@ -266,7 +266,15 @@ export function buildReplays({
     const timing = session.source === "Cursor" ? "paced" : "auto";
     execFileSync(
       replayCli,
-      [inputPath, "-o", outputPath, "--timing", timing],
+      [
+        inputPath,
+        "-o",
+        outputPath,
+        "--timing",
+        timing,
+        "--theme",
+        "github-light",
+      ],
       { cwd: rootDir, stdio: "inherit" },
     );
   }
