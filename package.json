@@ -1,0 +1,13 @@
+{
+  "name": "family-cookbook-replays",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "mask:transcripts": "node scripts/mask-transcripts.mjs",
+    "replay:build": "node scripts/build-replays.mjs"
+  },
+  "devDependencies": {
+    "claude-replay": "0.8.1"
+  }
+}
