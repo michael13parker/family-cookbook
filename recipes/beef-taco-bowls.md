@@ -50,8 +50,8 @@ ingredients:
 rating: 4
 rating_notes: "loved the bowl format — easy to customize per kid; halve the chili powder for Riley"
 liked_traits: [bowl-format, quick, tex-mex, customizable]
-last_cooked: 2026-07-17
-times_cooked: 7
+last_cooked:
+times_cooked: 0
 ---
 
 # Beef Taco Bowls

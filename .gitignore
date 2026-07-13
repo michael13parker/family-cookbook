@@ -10,6 +10,12 @@ docs/progress-notes.md
 docs/requirements.old.md
 docs/build-tasks.md
 
+# Local-only docs — anything under docs/local/ stays on this machine
+docs/local/
+
+# Superpowers brainstorm scratch/state — machine-specific working files
+.superpowers/
+
 # Personal household config — keep only the .example templates, ignore real filled-in files
 config/*.md
 !config/*.example.md

@@ -46,8 +46,8 @@ ingredients:
 rating: 5
 rating_notes: "huge hit — the kids loved building their own; almost no cleanup"
 liked_traits: [one-pan, build-your-own, tex-mex]
-last_cooked: 2026-07-02
-times_cooked: 4
+last_cooked:
+times_cooked: 0
 ---
 
 # Sheet-Pan Chicken Fajitas
