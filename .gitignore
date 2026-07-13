@@ -13,8 +13,27 @@ docs/build-tasks.md
 # Local-only docs — anything under docs/local/ stays on this machine
 docs/local/
 
+# Claude Code session transcripts — publish only explicitly reviewed sessions
+session-transcripts/*.jsonl
+!session-transcripts/4d01476d-e1af-468e-9a1e-019cb740c98f.jsonl
+!session-transcripts/9cd153b5-7650-4ae1-bf5b-ec920cdc0c52.jsonl
+!session-transcripts/893d1ee6-7032-470a-b83a-918e37db5fcf.jsonl
+!session-transcripts/9864a6ff-a2d2-4dfc-9312-e60ff327434f.jsonl
+!session-transcripts/8a6a3065-a0d4-44ea-a6a5-be4d949d9956.jsonl
+!session-transcripts/40873f62-c1ae-4301-bdc8-e3151632634c.jsonl
+!session-transcripts/076ff2e6-4e03-4b50-9c4c-fbeed80d6d81.jsonl
+!session-transcripts/afbfe472-e824-46d6-a419-29a767855bf7.jsonl
+!session-transcripts/518b8197-79de-48cc-b48b-779fb99c85bf.jsonl
+!session-transcripts/b0ccfe0e-4bc2-4dd8-bc68-b8a63cbe3479.jsonl
+!session-transcripts/4255feb1-8a08-4920-8db1-79f947e9855e.jsonl
+!session-transcripts/844ea45c-8dd6-41d1-a981-6576bf121e6a.jsonl
+!session-transcripts/83cc026c-570e-45e2-ad33-a89bb907e7d9.jsonl
+
 # Superpowers brainstorm scratch/state — machine-specific working files
 .superpowers/
+
+# Node dependencies
+node_modules/
 
 # Personal household config — keep only the .example templates, ignore real filled-in files
 config/*.md
